@@ -88,15 +88,17 @@ Configuration:
     * Add `WSGIScriptAlias / /var/www/html/myapp.wsgi` before `</VirtualHost>` closing line
     * save the file and restart Apache `sudo apache2ctl restart`
 
-* Install git, clone and setup your Catalog App project (from your GitHub repository from earlier in the Nanodegree program) so that it functions correctly when visiting your server’s IP address in a browser. Remember to set this up appropriately so that your .git directory is not publicly accessible via a browser!
+* Install git, we will clone your catalog project at a later step
 
-* install git
-    * `sudo apt-get install git`
+    * Install git `sudo apt-get install git`
 
-* install python dev and verify WSGI is enabled
+* install the python-dev package and verify WSGI is enabled
+
     * Install python-dev package`sudo apt-get install python-dev`
     * Verify wsgi is enabled `sudo a2enmod wsgi`
-* Create flask app taken from [digitalocean](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
+    
+* Create a flask app
+
     * `cd /var/www`
     * `sudo mkdir catalog`
     * `cd catalog`
@@ -104,6 +106,7 @@ Configuration:
     * `cd catalog`
     * `sudo mkdir static templates`
     * `sudo nano __init__.py `
+    * Copy the contents below into __init__.py and save the file, for now.
 
     ```
      from flask import Flask
@@ -116,6 +119,7 @@ Configuration:
     ```
 
 * install flask
+
     * `sudo apt-get install python-pip`
     * `sudo pip install virtualenv `
     * `sudo virtualenv venv`
@@ -126,6 +130,7 @@ Configuration:
     * `deactivate`
 
 * Configure And Enable New Virtual Host
+
     * Create host config file `sudo nano /etc/apache2/sites-available/catalog.conf`
     * paste the following:
 
@@ -146,41 +151,47 @@ Configuration:
       ErrorLog ${APACHE_LOG_DIR}/error.log
       LogLevel warn
       CustomLog ${APACHE_LOG_DIR}/access.log combined
-  </VirtualHost>
-```
-    * save file(nano: `ctrl+x`, `Y`, Enter)
+   </VirtualHost>
+   ```
+    * Save the file.
     * Enable `sudo a2ensite catalog`
 
 * Create the wsgi file
+
     * `cd /var/www/catalog`
     * `sudo nano catalog.wsgi`
+    * Copy the contents below into the catalog.wsgi file, for now.
 
     ```
-  #!/usr/bin/python
-  import sys
-  import logging
-  logging.basicConfig(stream=sys.stderr)
-  sys.path.insert(0,"/var/www/catalog/")
+     #!/usr/bin/python
+     import sys
+     import logging
+     logging.basicConfig(stream=sys.stderr)
+     sys.path.insert(0,"/var/www/catalog/")
 
-  from catalog import app as application
-  application.secret_key = 'Add your secret key'
-  ```
+     from catalog import app as application
+     application.secret_key = 'Add your secret key'
+    ```
 
-  * save file(nano: `ctrl+x`, `Y`, Enter)
-
-  * `sudo service apache2 restart`
+    * Save the file
+    * `sudo service apache2 restart`
 
 * Clone Github Repo
-    * `sudo git clone https://github.com/jaskanwal96/item-catalog`
-    * make sure you get hidden files iin move `shopt -s dotglob`. Move files from clone directory to catalog `mv /var/www/catalog/item-catalog/* /var/www/catalog/catalog/`
-    * remove clone directory `sudo rm -r devpost`
+
+    * Go to your github and copy the url address of the catalog project
+    * `sudo git clone yoururladdresshere`
+    * Hide your files `shopt -s dotglob`. 
+    * Move files from the clone directory to catalog `mv /var/www/catalog/item-catalog/* /var/www/catalog/catalog/`
+    * remove clone directory `sudo rm -r item-catalog`
 
 * make .git inaccessible
+
     * from `cd /var/www/catalog/` create .htaccess file `sudo nano .htaccess`
     * paste in `RedirectMatch 404 /\.git`
-    * save file(nano: `ctrl+x`, `Y`, Enter)
+    * Save the file
 
-* install dependencies:
+* install project dependencies:
+
     * `source venv/bin/activate`
     * `pip install httplib2`
     * `pip install requests`
@@ -188,32 +199,32 @@ Configuration:
     * `sudo pip install sqlalchemy`
     * `pip install Flask-SQLAlchemy`
     * `sudo pip install python-psycopg2`
-    * If you used any other packages in your project be sure to install those as well.
-
+    * `pip install requests`
+    * If you used any other packages, install them too. You can usually tell from your imports.
 
 * Install and configure PostgreSQL:
-    * Install postgres`sudo apt-get install postgresql`
-    * install additional models`sudo apt-get install postgresql-contrib`
-    * by default no remote connections are [not allowed](http://www.postgresql.org/docs/9.2/static/auth-pg-hba-conf.html)
+
+    * Install postgres `sudo apt-get install postgresql`
+    * install additional models `sudo apt-get install postgresql-contrib`
     * config database_setup.py `sudo nano database_setup.py`
-    * `python engine = create_engine('postgresql://catalog:db-password@localhost/catalog')`
-    * repeat for project.py
-    * copy your main project.py file into the __init__.py file `mv project.py __init__.py`
+    * Replace your SQLite line with `engine = create_engine('postgresql://catalog:db-password@localhost/catalog')`
+    * repeat for project.py and any files that connect to your database i.e. data.py (if you insert data).
+    * copy your main project.py content into the __init__.py file, this will now be your main file.
     * Add catalog user `sudo adduser catalog`
-    * login as postgres super user`sudo su - postgres`
-    * enter postgres`psql`
-    * Create user catalog`CREATE USER catalog WITH PASSWORD 'db-password';`
-    * Change role of user catalog to creatDB` ALTER USER catalog CREATEDB;`
-    * List all users and roles to verify`\du`
-    * Create new DB "catalog" with own of catalog`CREATE DATABASE catalog WITH OWNER catalog;`
-    * Connect to database`\c catalog`
+    * login as postgres super user `sudo su - postgres`
+    * enter postgres `psql`
+    * Create user catalog `CREATE USER catalog WITH PASSWORD 'db-password';`
+    * Change role of user catalog to creatDB ` ALTER USER catalog CREATEDB;`
+    * List all users and roles to verify `\du`
+    * Create new DB "catalog" with own of catalog `CREATE DATABASE catalog WITH OWNER catalog;`
+    * Connect to database `\c catalog`
     * Revoke all rights `REVOKE ALL ON SCHEMA public FROM public;`
-    * Give accessto only catalog role`GRANT ALL ON SCHEMA public TO catalog;`
-    * Quit postgres`\q`
-    * logout from postgres super user`exit`
+    * Give access to only catalog role `GRANT ALL ON SCHEMA public TO catalog;`
+    * Quit postgres `\q`
+    * logout from postgres super user `exit`
     * Setup your database schema `python database_setup.py`
 
+* fixing OAuth for Facebook users:
 
 
-* fix OAuth to work with hosted Application
 
