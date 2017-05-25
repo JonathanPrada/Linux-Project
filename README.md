@@ -227,6 +227,11 @@ Configuration:
     * logout from postgres super user `exit`
     * Setup your database schema `python database_setup.py`
 
+* Delete ufw ports i.e. 22:
+
+    * follow the link below:
+    * https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-14-04
+
 * Setting up Facebook OAuth to work with the server:
 
     * If you used or also used google OAuth, the best step is to browse the relevant forums.
@@ -252,4 +257,4 @@ https://stackoverflow.com/questions/37001004/facebook-login-message-url-blocked-
 https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps  
 https://auth0.com/docs/connections/social/facebook  
 http://postgresguide.com/utilities/psql.html  
-
+https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-14-04  
