@@ -1,9 +1,11 @@
 # Linux-Project
 Setting up an AWS lightsail server to run a flask app
 
-* public Ip: `http://34.253.50.16/`
-* SSH PORT: `2200`
-* Full project URL: [Catalog Site](http://ec2-34-253-50-16.eu-west-1.compute.amazonaws.com)
+* Provide details for the reviewer:
+
+    * public Ip: `http://34.253.50.16/`
+    * SSH PORT: `2200`
+    * Full project URL: [Catalog Site](http://ec2-34-253-50-16.eu-west-1.compute.amazonaws.com)
 
 Configuration:
 
@@ -224,7 +226,21 @@ Configuration:
     * logout from postgres super user `exit`
     * Setup your database schema `python database_setup.py`
 
-* fixing OAuth for Facebook users:
+* Setting up Facebook OAuth to work with the server:
 
+    * If you used or also used google OAuth, the best step is to browse the relevant forums.
+    * Go to https://developers.facebook.com/
+    * At the top myapps, select the catalog app you made for your project.
+    * On the sidebar, go to facebook login.
+    * If not enabled, enable Client OAUTH Login, Web OAUTH Login, Embedded Browser OAUTH Login.
+    * Insert into OAuth valid redirect Url's: http://yourpublicip/_oauth/facebook, http://yourpublicip/login,     http://yourpublicip/
 
+* Setting up the server to work with Facebook OAuth:
 
+    * Your __init__.py file, will need a full path to the fb_client_secrets.json like so `/var/www/catalog/catalog/fb_client_secrets.json`
+    * Do your final restart to see changes take effect `sudo service apache2 restart`
+
+* References
+
+https://discussions.udacity.com/t/connection-error-linux/241400/17
+https://discussions.udacity.com/t/cant-access-flask-application-in-the-browser/39931/9
