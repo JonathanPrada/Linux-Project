@@ -3,7 +3,7 @@ Setting up an AWS lightsail server to run a flask app
 
 * public Ip: `http://34.253.50.16/`
 * SSH PORT: `2200`
-* Full project URL:[link](http://ec2-34-253-50-16.eu-west-1.compute.amazonaws.com)
+* Full project URL: [Catalog Site](http://ec2-34-253-50-16.eu-west-1.compute.amazonaws.com)
 
 Configuration:
 
@@ -65,28 +65,28 @@ Configuration:
     * From your local machine you can now log in via key pair: `ssh grader@*Public-IP* -p 2200 -i ~/.ssh/item-catalog`
 
 * Configure the Uncomplicated Firewall (UFW) to only allow  incoming connections for SSH (port 2200), HTTP (port 80),  and NTP (port 123)
-    * Check UFW status to make sure its inactive`sudo ufw status`
-    * Deny all incoming by default`sudo ufw default deny incoming`
-    * Allow outgoing by default`sudo ufw default allow outgoing`
+
+    * Check the firewall UFW status to make sure its inactive `sudo ufw status`
+    * Deny all incoming by default `sudo ufw default deny incoming`
+    * Allow outgoing by default` sudo ufw default allow outgoing`
     * Allow SSH `sudo ufw allow ssh`
-    * Allow SSH on port 2200`sudo ufw allow 2200/tcp`
-    * Allow HTTP on port 80`sudo ufw allow 80/tcp`
-    * Allow NTP on port 123`sudo ufw allow 123/udp`
-    * Turn on firewall`sudo ufw enable`
+    * Allow SSH on port 2200 `sudo ufw allow 2200/tcp`
+    * Allow HTTP on port 80 `sudo ufw allow 80/tcp`
+    * Allow NTP on port 123 `sudo ufw allow 123/udp`
+    * Turn on firewall` sudo ufw enable`
 
+* Configure the local timezone to UTC (Universal Time)
 
-* Configure the local timezone to UTC
     * run `sudo dpkg-reconfigure tzdata` from prompt: select none of the above. Then select UTC.
 
-
 * Install and configure Apache to serve a Python mod_wsgi application
-    * `sudo apt-get install apache2` Check if "It works!" at you public IP address given during setup.
-    * install mod_wsgi: `sudo apt-get install libapache2-mod-wsgi`
-    * configure Apache to handle requests using the WSGI module `sudo nano /etc/apache2/sites-enabled/000-default.conf`
-    * add `WSGIScriptAlias / /var/www/html/myapp.wsgi` before `</VirtualHost>` closing line
-    * save file(nano: `ctrl+x`, `Y`, Enter)
-    * Restart Apache `sudo apache2ctl restart`
 
+    * `sudo apt-get install apache2` 
+    * Go to your public IP address on a browser, it should show an Apache page with "It works!"
+    * Install mod_wsgi `sudo apt-get install libapache2-mod-wsgi`
+    * Configure Apache to handle requests using the WSGI module `sudo nano /etc/apache2/sites-enabled/000-default.conf`
+    * Add `WSGIScriptAlias / /var/www/html/myapp.wsgi` before `</VirtualHost>` closing line
+    * save the file and restart Apache `sudo apache2ctl restart`
 
 * Install git, clone and setup your Catalog App project (from your GitHub repository from earlier in the Nanodegree program) so that it functions correctly when visiting your server’s IP address in a browser. Remember to set this up appropriately so that your .git directory is not publicly accessible via a browser!
 
