@@ -242,5 +242,13 @@ Configuration:
 
 * References
 
-https://discussions.udacity.com/t/connection-error-linux/241400/17
-https://discussions.udacity.com/t/cant-access-flask-application-in-the-browser/39931/9
+https://discussions.udacity.com/t/connection-error-linux/241400/17  
+https://discussions.udacity.com/t/cant-access-flask-application-in-the-browser/39931/9  
+https://discussions.udacity.com/t/i-dont-see-my-application-i-only-get-hello-world-its-working/175954/13  
+https://discussions.udacity.com/t/solved-cant-find-clien-secrets-json/230615  
+https://auth0.com/docs/connections/social/facebook  
+https://stackoverflow.com/questions/37001004/facebook-login-message-url-blocked-this-redirect-failed-because-the-redirect  
+https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps  
+https://auth0.com/docs/connections/social/facebook  
+http://postgresguide.com/utilities/psql.html  
+
