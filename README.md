@@ -4,7 +4,7 @@ Setting up an AWS lightsail server to run a flask app
 * Provide details for the reviewer:
 
     * Use the public IP to reach the website.
-    * public Ip: `http://34.253.50.16/`
+    * public Ip: `http://34.253.50.16`
     * SSH PORT: `2200`
     * Full project URL: (http://ec2-34-253-50-16.eu-west-1.compute.amazonaws.com)
 
